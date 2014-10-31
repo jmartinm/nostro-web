@@ -1,0 +1,5 @@
+django
+South
+django-geoposition
+django-allauth
+MySQL-python
