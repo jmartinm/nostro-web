@@ -8,4 +8,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('allauth.urls')),
+
+    url(r'^get_pois/', 'mapapp.views.get_pois', name='get_pois'),
+    url(r'^add_poi/', 'mapapp.views.add', name='add_poi'),
 )
