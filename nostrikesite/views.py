@@ -14,6 +14,7 @@ def export(request):
 	import os
 	import time
 	import subprocess
+	import datetime
 
 	pois = PointOfInterest.objects.all()
 	serialized_queryset = serializers.serialize('json', pois)
@@ -21,7 +22,8 @@ def export(request):
 	myfile = os.fdopen(fd, "w")
 	myfile.write(serialized_queryset)
 	ts = time.time()
-	myfile.write("timestamp: " + str(ts))
+	st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+	myfile.write("\n\ntimestamp: " + str(st) + '\n\n')
 	myfile.close()
 
 	fd_return, temp_path_return = mkstemp(dir="/tmp")
