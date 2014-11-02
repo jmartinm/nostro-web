@@ -10,10 +10,6 @@
 
 {% endblock %}
 {% block content %}
-{{issuer_name}}
-{{client_name}}
-{{client_org}}
-
 
 <h1 style="padding:15px">Add a new safe zone</h1>
 <div class="row" style="padding:20px">
@@ -24,6 +20,10 @@
           {% for form in formset %}
                 {% for field in form %}
                 {% if forloop.counter == 6 %}
+                <p class="bg-success">Valid certificate. The following information will be added to your entry: <br/>
+                Certificate name: {{client_name}} <br/>
+                Certificate organization: {{client_org}} <br/>
+                Certificate issued by: {{issuer_name}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="col-lg-8">

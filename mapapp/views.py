@@ -62,10 +62,10 @@ def add(request):
         formset = POIFormSet(queryset=PointOfInterest.objects.none())
 
     ctx = {}
-    if request.is_secure() and request.SSL_CLIENT_VERIFY == "SUCCESS":
-        ctx['issuer_name'] = request.get("SSL_CLIENT_I_DN_CN")
-        ctx['client_name'] = request.get("SSL_CLIENT_S_DN_CN")
-        ctx['client_org'] = request.get("SSL_CLIENT_S_DN_O")
+    if request.is_secure() and request.META.get("SSL_CLIENT_VERIFY") == "SUCCESS":
+        ctx['issuer_name'] = request.META.get("SSL_CLIENT_I_DN_CN")
+        ctx['client_name'] = request.META.get("SSL_CLIENT_S_DN_CN")
+        ctx['client_org'] = request.META.get("SSL_CLIENT_S_DN_O")
 
     ctx["formset"] = formset
     return render_to_response("mapapp/manage_poi.html", ctx,
