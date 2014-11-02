@@ -3,7 +3,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.forms import ModelForm, TextInput, Select, Textarea
 
@@ -12,7 +12,21 @@ from .models import PointOfInterest
 
 @csrf_protect
 def get_pois(request):
-    pois = PointOfInterest.objects.all()
+    verified_map = {
+        'verified': True,
+        'non verified': False,
+        'both': ""
+    }
+    query = {}
+    if "verified" in request.POST:
+        if request.POST["verified"] != "both":
+            query["verified"] = verified_map[request.POST["verified"]]
+    if "type" in request.POST:
+        if request.POST["type"] != "All":
+            query["type"] = request.POST["type"]
+
+    pois = PointOfInterest.objects.all().filter(**query)
+
     serialized_queryset = serializers.serialize('json', pois)
     return HttpResponse(serialized_queryset, content_type="application/json")
 
@@ -40,7 +54,8 @@ def add(request):
         formset = POIFormSet(request.POST, request.FILES)
         if formset.is_valid():
             formset.save()
-            return render_to_response("mapapp/manage_poi_success.html", {}, context_instance=RequestContext(request))
+            return redirect("home")
+            # {}, context_instance=RequestContext(request))
 
     else:
         formset = POIFormSet(queryset=PointOfInterest.objects.none())

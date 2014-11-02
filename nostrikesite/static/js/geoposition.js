@@ -20,7 +20,8 @@ if (jQuery != undefined) {
             'mapTypeId': google.maps.MapTypeId.ROADMAP,
             'scrollwheel': false,
             'streetViewControl': false,
-            'panControl': false
+            'panControl': false,
+            "center": new google.maps.LatLng(33.512950, 36.294998)
         };
 
         var markerDefaults = {
