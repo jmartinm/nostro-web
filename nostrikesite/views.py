@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from mapapp.models import PointOfInterest
 from django.core import serializers
+from django.http import HttpResponse
 
 
 # Create your views here.
