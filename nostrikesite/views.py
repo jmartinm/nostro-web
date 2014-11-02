@@ -17,13 +17,14 @@ def export(request):
 	pois = PointOfInterest.objects.all()
 	serialized_queryset = serializers.serialize('json', pois)
 	fd, temp_path = mkstemp()
-	print temp_path
 	myfile = os.fdopen(fd, "w")
 	myfile.write(serialized_queryset)
 	ts = time.time()
 	myfile.write("timestamp: " + str(ts))
 	myfile.close()
 
-	fd_return, temp_path_return = mkstemp()
-	subprocess.call(["/home/ubuntu/signdb.sh", temp_path, temp_path_return])
-	return open(temp_path_return).read()
+	fd_return, temp_path_return = mkstemp(dir="/tmp")
+	x = subprocess.call(["/home/ubuntu/signdb.sh", temp_path, temp_path_return])
+	response = HttpResponse(open(temp_path_return).read(), content_type="text/plain")
+	response['Content-Disposition'] = 'attachment; filename=export.txt'
+	return response
