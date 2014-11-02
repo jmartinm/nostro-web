@@ -45,8 +45,12 @@ function get_gmap_infobox(element) {
 
     var infoBox_verification = document.createElement('div');
     infoBox_verification.className = "infoBox_verification";
-    infoBox_verification.innerHTML = "Signed and verified by ThePortOfLife";
-    infoBox_verification.innerHTML += " on " + element.fields.verified_date + "</b>";
+    if(element.fields.verified) {
+        infoBox_verification.innerHTML = "Signed and verified by ThePortOfLife";
+        infoBox_verification.innerHTML += " on " + element.fields.verified_date + "</b>";
+    } else {
+        infoBox_verification.innerHTML = "This site has not yet been verified by an organization!";
+    }
     infoBox.appendChild(infoBox_verification);
 
     var infoBox_content = document.createElement('div');
