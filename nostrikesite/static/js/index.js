@@ -18,6 +18,40 @@ var color_map = {
     nonverified : "47aedb"
 };
 
+function get_gmap_infobox(element) {
+    var infoBox = document.createElement('div');
+    infoBox.className = "safe-location";
+    var infoBox_header = document.createElement('div');
+    infoBox_header.className = "infoBox_header";
+    infoBox_header.innerHTML = "{0}".format(element.fields.name);
+    infoBox.appendChild(infoBox_header);
+
+    var infoBox_type = document.createElement('div');
+    infoBox_type.className = "infoBox_type";
+    infoBox_type.innerHTML = "H";
+    infoBox.appendChild(infoBox_type);
+
+    var infoBox_verification = document.createElement('div');
+    infoBox_verification.className = "infoBox_verification";
+    infoBox_verification.innerHTML = "Signed and verified by <b>ThePortOfLife<b> on <b>November 10, 2014</b>";
+    infoBox.appendChild(infoBox_verification);
+
+    var infoBox_content = document.createElement('div');
+    infoBox_content.className = "infoBox_content";
+    infoBox_content.innerHTML = "Name: {0} <br/>Type: {1} <br/>Website: {2}".format(
+        element.fields.name,
+        element.fields.type,
+        element.fields.website);
+    infoBox.appendChild(infoBox_content);
+
+    return new InfoBox({
+        content: infoBox,
+            boxStyle: {
+                background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat"
+            }
+        });
+}
+
 function fill_gmap(data) {
     $.each(data, function(index, element) {
             var pinColor;
@@ -37,13 +71,7 @@ function fill_gmap(data) {
             new google.maps.Point(12, 35));
             var parts = element.fields.position.split(/,\s*/);
             var myLatlng = new google.maps.LatLng(parts[0], parts[1]);
-            var data = "Name: {0} <br/>Type: {1} <br/>Website: {2}".format(
-                element.fields.name,
-                element.fields.type,
-                element.fields.website);
-            var infowindow = new google.maps.InfoWindow({
-                content: data
-            });
+            var infowindow = get_gmap_infobox(element);
             var marker = new google.maps.Marker({
                 position: myLatlng,
                 map: map,
