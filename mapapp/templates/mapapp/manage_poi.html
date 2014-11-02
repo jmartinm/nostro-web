@@ -20,10 +20,13 @@
           {% for form in formset %}
                 {% for field in form %}
                 {% if forloop.counter == 6 %}
-                <p class="bg-success">Valid certificate. The following information will be added to your entry: <br/>
-                Certificate name: {{client_name}} <br/>
-                Certificate organization: {{client_org}} <br/>
-                Certificate issued by: {{issuer_name}}
+                {% if valid_cert %}
+                <p class="bg-success"><i><strong>Valid certificate</strong>. The following information will be added to your entry:</i> <br/>
+                <strong>Certificate name:</strong> {{client_name}} <br/>
+                <strong>Certificate organization:</strong> {{client_org}} <br/>
+                <strong>Certificate issued by:</strong> {{issuer_name}}
+                </p>
+                {% endif %}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="col-lg-8">

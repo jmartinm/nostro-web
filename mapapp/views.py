@@ -49,20 +49,17 @@ class POIForm(ModelForm):
 def add(request):
     from django.forms.models import modelformset_factory
     POIFormSet = modelformset_factory(PointOfInterest, form=POIForm)
-    # import ipdb; ipdb.set_trace()
-    # formset = POIFormSet(queryset=PointOfInterest.objects.none())
     if request.method == 'POST':
         formset = POIFormSet(request.POST, request.FILES)
         if formset.is_valid():
             formset.save()
             return redirect("home")
-            # {}, context_instance=RequestContext(request))
-
     else:
         formset = POIFormSet(queryset=PointOfInterest.objects.none())
 
     ctx = {}
     if request.is_secure() and request.META.get("SSL_CLIENT_VERIFY") == "SUCCESS":
+        ctx['valid_cert'] = True
         ctx['issuer_name'] = request.META.get("SSL_CLIENT_I_DN_CN")
         ctx['client_name'] = request.META.get("SSL_CLIENT_S_DN_CN")
         ctx['client_org'] = request.META.get("SSL_CLIENT_S_DN_O")
