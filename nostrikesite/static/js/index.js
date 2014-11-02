@@ -55,12 +55,14 @@ function get_gmap_infobox(element) {
 
     var infoBox_content = document.createElement('div');
     infoBox_content.className = "infoBox_content";
-    infoBox_content.innerHTML = "Name: {0} <br/>Type: {1} <br/>Website: <a href={2}>{2}</a><br/>Location: {3}, {4}".format(
+    var latitude = Number(element.fields.position.split(/,\s*/)[0]).toFixed(3);
+    var longitude = Number(element.fields.position.split(/,\s*/)[1]).toFixed(3);
+    infoBox_content.innerHTML = "Name: {0} <br/>Type: {1} <br/>Website: <a href={2}>{2}</a><br/>Location: {3} {4}, {5} {6}".format(
         element.fields.name,
         element.fields.type,
         element.fields.website,
-        Number(element.fields.position.split(/,\s*/)[0]).toFixed(3),
-        Number(element.fields.position.split(/,\s*/)[1]).toFixed(3));
+        Math.abs(latitude), latitude>0?"N":"S",
+        Math.abs(longitude), longitude>0?"E":"W" );
     infoBox.appendChild(infoBox_content);
 
     return new InfoBox({
