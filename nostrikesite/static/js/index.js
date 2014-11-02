@@ -30,7 +30,7 @@ function get_gmap_infobox(element) {
 
     var infoBox_type = document.createElement('div');
     infoBox_type.className = "infoBox_type";
-    infoBox_type.innerHTML = "H";
+    infoBox_type.innerHTML = element.fields.type.substr(0,1);
     infoBox.appendChild(infoBox_type);
 
     var infoBox_endorse = document.createElement('div');
@@ -38,6 +38,10 @@ function get_gmap_infobox(element) {
     infoBox_endorse.innerHTML = "Endorse!";
     infoBox.appendChild(infoBox_endorse);
 
+    var infoBox_endorse_count = document.createElement('div');
+    infoBox_endorse_count.className = "infoBox_endorse_count";
+    infoBox_endorse_count.innerHTML = element.fields.public_endorsment + " persons have endorsed this location!";
+    infoBox.appendChild(infoBox_endorse_count);
 
     var infoBox_verification = document.createElement('div');
     infoBox_verification.className = "infoBox_verification";
@@ -47,10 +51,12 @@ function get_gmap_infobox(element) {
 
     var infoBox_content = document.createElement('div');
     infoBox_content.className = "infoBox_content";
-    infoBox_content.innerHTML = "Name: {0} <br/>Type: {1} <br/>Website: {2}".format(
+    infoBox_content.innerHTML = "Name: {0} <br/>Type: {1} <br/>Website: <a href={2}>{2}</a><br/>Location: {3}, {4}".format(
         element.fields.name,
         element.fields.type,
-        element.fields.website);
+        element.fields.website,
+        Number(element.fields.position.split(/,\s*/)[0]).toFixed(3),
+        Number(element.fields.position.split(/,\s*/)[1]).toFixed(3));
     infoBox.appendChild(infoBox_content);
 
     return new InfoBox({
@@ -88,11 +94,13 @@ function fill_gmap(data) {
                 icon: pinImage,
                 shadow: pinShadow
             });
+            marker.ib = infowindow;
+            infowindow.isOpen = false;
             markers.push(marker)
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
+                if(infowindow.isOpen){ infowindow.close(); infowindow.isOpen = false; }
+                else { infowindow.open(map,marker); infowindow.isOpen = true; }
             });
-
         })
 
 }
