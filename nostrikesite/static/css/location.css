@@ -2,15 +2,27 @@
  color: white;
  position: relative;
  font-size: 30px;
- left: 60px;
+ left: 80px;
+ top: 15px;
+}
+
+.verified {
+  background-color: #d8444f;
+  border-color: #d8444f;
+}
+
+.not_verified {
+  background-color: #47aedb;
+  border-color: #47aedb;
 }
 
 .infoBox_type {
   position: relative;
-  top: -40px;
+  top: -30px;
+  left: 10px;
   color: #D8444F;
   font-size: 50px;
-  font-style: bold;
+  font-weight: bold;
   background-color: white;
   width: 50px;
   height: 50px;
@@ -21,25 +33,37 @@
 
 .infoBox_verification {
   position: relative;
+  border-left: 10px solid transparent;
   background-color: white;
   height: 20px;
   vertical-align: middle;
-  top: -30px;
+  line-height: 20px;
+  top: -20px;
 }
 
+.infoBox_endorse {
+  position: absolute;
+  top: 155px;
+  background-color: white;
+  border-radius: 10px;
+  left: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  width: 120px;
+  text-align: center;
+}
 .infoBox_content {
-  position: relative;
-  top: -25px;
+  position: absolute;
+  top: 100px;
+  left: 10px;
+  font-weight: bold;
 }
 
 .safe-location { 
-  border-style: Solid;
-  border-color: rgba(216, 68, 79, 1);
-  background-color: rgba(216, 68, 79, 1);
-  border-width: 10px;
+  border-width: 0px;
   border-radius: 10px 10px 10px 10px;
   -moz-border-radius: 10px 10px 10px 10px;
   -webkit-border-radius: 10px 10px 10px 10px;
-  width: 600px; 
-  heigh: 400px;
+  width: 400px; 
+  height: 200px;
 }

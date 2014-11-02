@@ -21,6 +21,8 @@ var color_map = {
 function get_gmap_infobox(element) {
     var infoBox = document.createElement('div');
     infoBox.className = "safe-location";
+    if(element.fields.verified) infoBox.className += " verified";
+    else infoBox.className += " not_verified";
     var infoBox_header = document.createElement('div');
     infoBox_header.className = "infoBox_header";
     infoBox_header.innerHTML = "{0}".format(element.fields.name);
@@ -31,9 +33,16 @@ function get_gmap_infobox(element) {
     infoBox_type.innerHTML = "H";
     infoBox.appendChild(infoBox_type);
 
+    var infoBox_endorse = document.createElement('div');
+    infoBox_endorse.className = "infoBox_endorse";
+    infoBox_endorse.innerHTML = "Endorse!";
+    infoBox.appendChild(infoBox_endorse);
+
+
     var infoBox_verification = document.createElement('div');
     infoBox_verification.className = "infoBox_verification";
-    infoBox_verification.innerHTML = "Signed and verified by <b>ThePortOfLife<b> on <b>November 10, 2014</b>";
+    infoBox_verification.innerHTML = "Signed and verified by ThePortOfLife";
+    infoBox_verification.innerHTML += " on " + element.fields.verified_date + "</b>";
     infoBox.appendChild(infoBox_verification);
 
     var infoBox_content = document.createElement('div');
