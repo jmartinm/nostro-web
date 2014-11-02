@@ -10,8 +10,13 @@
 
 {% endblock %}
 {% block content %}
-<h1>Add a new safe zone</h1>
-<div class="row">
+{{issuer_name}}
+{{client_name}}
+{{client_org}}
+
+
+<h1 style="padding:15px">Add a new safe zone</h1>
+<div class="row" style="padding:20px">
         <form method="post" role="form">
           {% csrf_token %}
           {{ formset.management_form }}
@@ -19,6 +24,7 @@
           {% for form in formset %}
                 {% for field in form %}
                 {% if forloop.counter == 6 %}
+                <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="col-lg-8">
                 {% endif %}
@@ -30,7 +36,6 @@
                   </div>
                 {% endfor %}
             {% endfor %}
-          <button type="submit" class="btn btn-default">Submit</button>
         </form>
         </div>
     </div>
