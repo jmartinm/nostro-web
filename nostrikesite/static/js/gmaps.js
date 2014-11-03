@@ -67,10 +67,12 @@ function setAllMap(map) {
     markers[i].setMap(map);
   }
 }
+
 // Removes the markers from the map, but keeps them in the array.
 function clearMarkers() {
   setAllMap(null);
 }
+
 // Deletes all markers in the array by removing references to them.
 function deleteMarkers() {
   clearMarkers();

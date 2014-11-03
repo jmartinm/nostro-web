@@ -18,6 +18,8 @@ var color_map = {
     nonverified : "47aedb"
 };
 
+var infowindow;
+
 function get_gmap_infobox(element) {
     var infoBox = document.createElement('div');
     infoBox.className = "safe-location";
@@ -92,7 +94,6 @@ function fill_gmap(data) {
             new google.maps.Point(12, 35));
             var parts = element.fields.position.split(/,\s*/);
             var myLatlng = new google.maps.LatLng(parts[0], parts[1]);
-            var infowindow = get_gmap_infobox(element);
             var marker = new google.maps.Marker({
                 position: myLatlng,
                 map: map,
@@ -101,11 +102,14 @@ function fill_gmap(data) {
                 shadow: pinShadow
             });
             marker.ib = infowindow;
-            infowindow.isOpen = false;
+            // infowindow.isOpen = false;
             markers.push(marker)
             google.maps.event.addListener(marker, 'click', function() {
-                if(infowindow.isOpen){ infowindow.close(); infowindow.isOpen = false; }
-                else { infowindow.open(map,marker); infowindow.isOpen = true; }
+                // if(infowindow.isOpen){ infowindow.close(); infowindow.isOpen = false; }
+                // else { infowindow.open(map,marker); infowindow.isOpen = true; }
+                if (infowindow) infowindow.close();
+                infowindow = get_gmap_infobox(element);
+                infowindow.open(map,marker);
             });
         })
 
