@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+# BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 PROJECT_ROOT = os.path.dirname(__file__)
 
@@ -30,9 +30,13 @@ TEMPLATE_DIRS = (
   os.path.join(PROJECT_ROOT, "templates"),
 )
 
-STATICFILES_DIRS = (
-  os.path.join(PROJECT_ROOT, "static"),
-)
+# STATICFILES_DIRS = (
+#   os.path.join(PROJECT_ROOT, "static"),
+# )
+
+# STATIC_URL = '/static/'
+
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, "..", STATIC_URL.strip("/"))
 
 # List of processors used by RequestContext to populate the context.
 # Each one should be a callable that takes the request object as its
@@ -67,8 +71,6 @@ LOGIN_REDIRECT_URL = '/'
 #         'METHOD': 'js_sdk'  # instead of 'oauth2'
 #     }
 # }
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -112,12 +114,12 @@ WSGI_APPLICATION = 'nostrikesite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
         'NAME': 'nostrike',
         'USER': 'nostrike',
         'PASSWORD': 'nostrike',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'HOST': '172.17.42.1',   # Or an IP Address that your DB is hosted on
+        'PORT': '49227',
     }
 }
 
@@ -135,9 +137,24 @@ USE_L10N = True
 USE_TZ = True
 
 
+
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+# Static asset configuration
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/static/'
-
-SITE_ID = 2
+SITE_ID = 1
